@@ -1,0 +1,23 @@
+name: "One-way Mirror"
+on:
+#  push:
+  schedule:
+    - cron: "0 17 * * *"
+  workflow_dispatch:
+
+jobs:
+  push-code:
+    if: github.repository_owner == 'jors-matthys_liantis'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: |
+          echo ${{ secrets.MIRROR_DEPLOY_KEY }} > ~/.ssh/deploy_key_mirror
+          chmod 600 ~/.ssh/deploy_key_mirror
+          git push --mirror ${{secrets.MIRROR_URL}}
+        shell: bash
+        env:
+          GIT_SSH_COMMAND: 'ssh -i ~/.ssh/deploy_key_mirror'
+
+

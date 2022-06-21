@@ -9,9 +9,6 @@ jobs:
   push-code:
     if: github.repository_owner == 'jors-matthys_liantis'
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - run: |
           git clone --bare ${{ github.repositoryUrl }}
           echo ${{ secrets.MIRROR_DEPLOY_KEY }} > ~/.ssh/deploy_key_mirror

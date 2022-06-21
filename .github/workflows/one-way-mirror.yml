@@ -13,6 +13,7 @@ jobs:
         with:
           fetch-depth: 0
       - run: |
+          git clone --bare ${{ github.repositoryUrl }}
           echo ${{ secrets.MIRROR_DEPLOY_KEY }} > ~/.ssh/deploy_key_mirror
           chmod 600 ~/.ssh/deploy_key_mirror
           git push --mirror ${{secrets.MIRROR_URL}}
